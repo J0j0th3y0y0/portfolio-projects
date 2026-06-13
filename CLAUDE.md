@@ -8,6 +8,7 @@ There is no build step, package manager, or dev server. All projects are static 
 
 - **Connect 4** — open `connect4.html` directly in a browser
 - **Budget Tracker** — open `budget-tracker/index.html` in a browser (needs internet for Chart.js CDN)
+- **Kanban Board** — open `kanban-board/index.html` directly in a browser
 - **Job Tracker extension** — load unpacked via `chrome://extensions` or `edge://extensions` (Developer mode → Load unpacked → select `job-tracker-extension/`)
 
 After editing extension files, click the refresh icon on the extension card in the browser's extensions page to reload.
@@ -31,6 +32,16 @@ All state lives in the `transactions` array in `app.js`, persisted to `localStor
 - Chart instances (`categoryChart`, `monthlyChart`) are module-level variables; always `destroy()` before recreating to avoid Chart.js canvas reuse errors
 - `viewYear`/`viewMonth` are `null` for all-time mode, or a year/month integer pair for monthly mode
 - Chart.js is loaded from CDN (`cdn.jsdelivr.net`) — no local copy
+
+### Kanban Board (`kanban-board/`)
+All state lives in the `data` object (`{ columns: [...] }`) in `app.js`, persisted to `localStorage` under the key `kanbanData`.
+
+- `render()` tears down and rebuilds the entire board from `data` on every state change — no partial updates
+- Drag-and-drop uses the HTML5 API: `dragstart`/`dragend` on cards, `dragover`/`dragleave`/`drop` on each column's `.col-cards` container
+- A `.drop-indicator` div is inserted into the DOM during `dragover` to show the insertion point; `getInsertTarget()` finds the card whose top half is below the cursor
+- On `drop`, `indicator.nextSibling.dataset.id` identifies which card to insert before; if null, the dragged card is appended to the end
+- `findCard(id)` searches all columns and returns `{ card, col }` — used instead of storing column context on every element
+- Default seed data is written by `defaultData()` and only used when `localStorage` has no saved state
 
 ## Conventions
 
