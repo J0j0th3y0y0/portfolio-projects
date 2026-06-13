@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-left">
+      <div class="logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <rect x="2" y="5" width="20" height="15" rx="2" fill="#4f46e5"/>
+          <path d="M2 10h20" stroke="white" stroke-width="1.5"/>
+          <circle cx="6" cy="15" r="1.5" fill="white"/>
+          <rect x="10" y="14" width="7" height="2" rx="1" fill="white"/>
+        </svg>
+        Budget Tracker
+      </div>
+    </div>
+    <div class="header-right">
+      <button id="btn-export" class="btn-outline">Export CSV</button>
+      <button id="btn-add" class="btn-primary">+ Add Transaction</button>
+    </div>
+  </header>
+
+  <!-- Month Navigation -->
+  <div class="month-nav">
+    <button id="btn-prev-month" class="month-btn">&#8249;</button>
+    <span id="month-label" class="month-label"></span>
+    <button id="btn-next-month" class="month-btn">&#8250;</button>
+    <button id="btn-all-time" class="btn-ghost">All Time</button>
+  </div>
+
+  <main>
+    <!-- Summary Cards -->
+    <section class="summary-row">
+      <div class="card summary-card balance">
+        <div class="card-label">Balance</div>
+        <div class="card-value" id="val-balance">$0.00</div>
+        <div class="card-sub" id="sub-balance"></div>
+      </div>
+      <div class="card summary-card income">
+        <div class="card-label">Income</div>
+        <div class="card-value green" id="val-income">$0.00</div>
+        <div class="card-sub" id="sub-income"></div>
+      </div>
+      <div class="card summary-card expenses">
+        <div class="card-label">Expenses</div>
+        <div class="card-value red" id="val-expenses">$0.00</div>
+        <div class="card-sub" id="sub-expenses"></div>
+      </div>
+    </section>
+
+    <!-- Charts -->
+    <section class="charts-row">
+      <div class="card chart-card">
+        <div class="chart-title">Spending by Category</div>
+        <div class="chart-wrap donut-wrap">
+          <canvas id="chart-category"></canvas>
+          <div id="chart-category-empty" class="chart-empty hidden">No expenses this period</div>
+        </div>
+      </div>
+      <div class="card chart-card">
+        <div class="chart-title">6-Month Overview</div>
+        <div class="chart-wrap">
+          <canvas id="chart-monthly"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- Transactions -->
+    <section class="card transactions-section">
+      <div class="transactions-header">
+        <h2>Transactions</h2>
+        <div class="tx-filters">
+          <input type="search" id="search" placeholder="Search...">
+          <select id="filter-type">
+            <option value="all">All Types</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+          <select id="filter-category">
+            <option value="all">All Categories</option>
+          </select>
+        </div>
+      </div>
+      <div id="tx-list"></div>
+    </section>
+  </main>
+
+  <!-- Add / Edit Modal -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Add Transaction</h3>
+        <button id="modal-close">&#x2715;</button>
+      </div>
+
+      <!-- Type toggle -->
+      <div class="type-toggle">
+        <button class="type-btn active" data-type="expense">Expense</button>
+        <button class="type-btn" data-type="income">Income</button>
+      </div>
+
+      <form id="tx-form">
+        <input type="hidden" id="tx-id">
+
+        <div class="form-row">
+          <div class="field">
+            <label>Amount <span class="req">*</span></label>
+            <div class="amount-wrap">
+              <span class="currency">$</span>
+              <input id="tx-amount" type="number" min="0.01" step="0.01" placeholder="0.00" required>
+            </div>
+          </div>
+          <div class="field">
+            <label>Date <span class="req">*</span></label>
+            <input id="tx-date" type="date" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Category <span class="req">*</span></label>
+          <select id="tx-category" required></select>
+        </div>
+
+        <div class="field">
+          <label>Description</label>
+          <input id="tx-desc" type="text" placeholder="e.g. Grocery run">
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="tx-delete" class="btn-danger hidden">Delete</button>
+          <button type="submit" class="btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
