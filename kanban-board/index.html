@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kanban Board</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <rect x="3" y="3" width="5" height="14" rx="1.5" fill="#4f46e5"/>
+        <rect x="10" y="3" width="5" height="9"  rx="1.5" fill="#818cf8"/>
+        <rect x="17" y="3" width="4" height="11" rx="1.5" fill="#c7d2fe"/>
+      </svg>
+      Kanban Board
+    </div>
+    <button id="btn-add-col" class="btn-outline">+ Add Column</button>
+  </header>
+
+  <div id="board"></div>
+
+  <!-- Card modal -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Add Card</h3>
+        <button id="modal-close">&#x2715;</button>
+      </div>
+      <form id="card-form">
+        <input type="hidden" id="card-id">
+        <input type="hidden" id="card-col-id">
+
+        <div class="field">
+          <label>Title <span class="req">*</span></label>
+          <input id="card-title" type="text" placeholder="What needs to be done?" required autofocus>
+        </div>
+
+        <div class="field">
+          <label>Description</label>
+          <textarea id="card-desc" rows="3" placeholder="Add more details..."></textarea>
+        </div>
+
+        <div class="field">
+          <label>Label</label>
+          <div id="label-picker" class="label-picker"></div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="card-delete" class="btn-danger hidden">Delete Card</button>
+          <button type="submit" class="btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
