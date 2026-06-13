@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Tracker</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="7" width="20" height="14" rx="2" fill="#4f46e5"/>
+        <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" stroke="#4f46e5" stroke-width="2"/>
+        <line x1="12" y1="12" x2="12" y2="16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <line x1="10" y1="14" x2="14" y2="14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Job Tracker
+    </div>
+    <nav class="tabs">
+      <button class="tab active" data-tab="add">Add Job</button>
+      <button class="tab" data-tab="list">My Apps</button>
+    </nav>
+  </header>
+
+  <!-- ADD JOB TAB -->
+  <div id="tab-add" class="tab-content active">
+    <div id="toast" class="toast hidden">Application saved!</div>
+
+    <form id="add-form" autocomplete="off">
+      <div class="field">
+        <label for="company">Company <span class="req">*</span></label>
+        <input id="company" type="text" placeholder="e.g. Google" required>
+      </div>
+
+      <div class="field">
+        <label for="role">Role <span class="req">*</span></label>
+        <input id="role" type="text" placeholder="e.g. Software Engineer Intern" required>
+      </div>
+
+      <div class="field">
+        <label for="url">Job URL</label>
+        <div class="input-row">
+          <input id="url" type="url" placeholder="Auto-filled from current tab">
+          <button type="button" id="btn-grab-url" title="Grab URL from current tab">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label for="date">Date Applied</label>
+          <input id="date" type="date">
+        </div>
+        <div class="field">
+          <label for="status">Status</label>
+          <select id="status">
+            <option value="bookmarked">Bookmarked</option>
+            <option value="applied" selected>Applied</option>
+            <option value="phone_screen">Phone Screen</option>
+            <option value="interview">Interview</option>
+            <option value="offer">Offer</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="notes">Notes</label>
+        <textarea id="notes" rows="2" placeholder="Referral, deadline, salary range..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary">Save Application</button>
+    </form>
+  </div>
+
+  <!-- MY APPS TAB -->
+  <div id="tab-list" class="tab-content hidden">
+    <div id="stats-row" class="stats-row"></div>
+
+    <div class="filter-bar">
+      <button class="filter active" data-filter="all">All</button>
+      <button class="filter" data-filter="bookmarked">Saved</button>
+      <button class="filter" data-filter="applied">Applied</button>
+      <button class="filter" data-filter="phone_screen">Screen</button>
+      <button class="filter" data-filter="interview">Interview</button>
+      <button class="filter" data-filter="offer">Offer</button>
+      <button class="filter" data-filter="rejected">Rejected</button>
+    </div>
+
+    <div id="jobs-list"></div>
+  </div>
+
+  <!-- EDIT MODAL -->
+  <div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">Edit Application</span>
+        <button id="modal-close" class="modal-close">&#x2715;</button>
+      </div>
+      <form id="edit-form">
+        <input type="hidden" id="edit-id">
+        <div class="field">
+          <label>Company <span class="req">*</span></label>
+          <input id="edit-company" type="text" required>
+        </div>
+        <div class="field">
+          <label>Role <span class="req">*</span></label>
+          <input id="edit-role" type="text" required>
+        </div>
+        <div class="field">
+          <label>Job URL</label>
+          <input id="edit-url" type="url">
+        </div>
+        <div class="two-col">
+          <div class="field">
+            <label>Date Applied</label>
+            <input id="edit-date" type="date">
+          </div>
+          <div class="field">
+            <label>Status</label>
+            <select id="edit-status">
+              <option value="bookmarked">Bookmarked</option>
+              <option value="applied">Applied</option>
+              <option value="phone_screen">Phone Screen</option>
+              <option value="interview">Interview</option>
+              <option value="offer">Offer</option>
+              <option value="rejected">Rejected</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Notes</label>
+          <textarea id="edit-notes" rows="2"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="modal-delete" class="btn-danger">Delete</button>
+          <button type="submit" class="btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Job Tracker",
+  "version": "1.0",
+  "description": "Track job applications from any job board with one click.",
+  "permissions": ["storage", "tabs", "activeTab"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Job Tracker"
+  }
+}
