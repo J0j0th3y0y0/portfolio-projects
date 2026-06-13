@@ -54,6 +54,22 @@ Open `budget-tracker/index.html` in any browser. Requires an internet connection
 
 ---
 
+### Kanban Board
+A drag-and-drop project board for organizing tasks across customizable columns.
+
+**Features**
+- Drag cards between and within columns with a live drop-indicator line
+- Inline card creation and a full edit/delete modal
+- 7 color labels per card
+- Editable column titles, add/delete columns
+- Seed data pre-loaded on first run
+- Data persists in `localStorage`
+
+**How to run**
+Open `kanban-board/index.html` directly in any browser — no server needed.
+
+---
+
 ## Tech Stack
 
 | Project | Stack |
@@ -61,6 +77,7 @@ Open `budget-tracker/index.html` in any browser. Requires an internet connection
 | Connect 4 | HTML, CSS, Vanilla JS |
 | Job Tracker | HTML, CSS, Vanilla JS, Chrome Extension API (MV3) |
 | Budget Tracker | HTML, CSS, Vanilla JS, Chart.js |
+| Kanban Board | HTML, CSS, Vanilla JS, HTML5 Drag and Drop API |
 
 ## Author
 
